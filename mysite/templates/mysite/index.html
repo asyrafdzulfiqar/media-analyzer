@@ -25,7 +25,49 @@
 
     </div>
 
+    {% csrf_token %}
+
     <script>
-        
+        const submit = document.getElementById("chat-submit");
+        const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+        const decoder = new TextDecoder();
+        let buffer = "";
+        let fullText = "";
+
+        async function submit_prompt () {
+            const prompt = document.getElementById("chat-prompt").value;
+
+            formData = new FormData();
+            formData.append("prompt", prompt);
+
+            const response = await fetch(
+                "{% url 'mysite:chat' %}",
+                {
+                    method: "POST",
+                    headers: {"X-CSRFToken": csrftoken},
+                    mode: "same-origin",
+                    body: formData
+                }
+            );
+
+            const reader = response.body.getReader();
+
+            while (true) {
+                const { done, value } = await reader.read();
+
+                if (done) {
+                    return;
+                }
+                
+                buffer = decoder.decode(value), { stream: true };
+                if (buffer.startsWith("data")) {
+                    const data = JSON.parse(JSON.stringify(buffer.replace("data: ", "").replace("\n\n", "")));
+                    console.log(data);
+                }
+                // console.log(buffer);
+            }
+        }
+
+        submit.addEventListener("click", submit_prompt);
     </script>
 {% endblock %}

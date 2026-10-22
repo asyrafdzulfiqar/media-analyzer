@@ -150,6 +150,6 @@ MAILERS = {
 
 # Session set to True
 
-SESSION_COOKIE_SECURE = True
+# SESSION_COOKIE_SECURE = True
 
 CSRF_USE_SESSIONS = True
