@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    Chat Page
+{% endblock %}
+
+{% block staticFile %}
+    <link rel="stylesheet" href="{% static 'mysite/style.css' %}">
+{% endblock %}
+
+{% block content %}
+    <h1 class="style-from-base">Hello there! Load successful</h1>
+    <p class="style-from-mysite">This is a test, if styling is applied from both files, stylesheets access successful!</p>
+
+    <div class="chat-interface">
+        <div class="chat-window">
+
+        </div>
+
+        <div class="chat-prompt">
+            <textarea name="" id="chat-prompt" cols="30" rows="10" placeholder="Enter chat..."></textarea>
+            <input type="submit" value="Chat" id="chat-submit">
+        </div>
+
+    </div>
+
+    <script>
+        
+    </script>
+{% endblock %}
